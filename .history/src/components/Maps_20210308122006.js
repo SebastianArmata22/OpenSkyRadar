@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { MapContainer, TileLayer,useMapEvent} from 'react-leaflet'
 import { Popup } from 'react-leaflet'
 import Marker from 'react-leaflet-enhanced-marker'
@@ -14,12 +14,14 @@ const Maps=()=>{
     const [bounds, setBounds]=useState({lamin: "51.948812696066994", lomin: "19.665860826414725", lamax:"52.71085027997479", lomax: "22.084266782954526"})
     const position = [52.211154, 21.018596]
     const [markers, setMarkers]=useState([])
-    useEffect(()=>{
+    const getData=useCallback(()=>{
         console.log(`https://opensky-network.org/api/states/all?lamin=${bounds.lamin}&lomin=${bounds.lomin}&lamax=${bounds.lamax}&lomax=${bounds.lomax}`)
         fetch(`https://opensky-network.org/api/states/all?lamin=${bounds.lamin}&lomin=${bounds.lomin}&lamax=${bounds.lamax}&lomax=${bounds.lomax}`)
         .then(response=>response.json())
         .then(data=>setMarkers(data.states))
-
+    },[bounds])
+    useEffect(()=>{
+        getData()
     },[bounds])
     return(
         <MapContainer center={position} zoom={9} scrollWheelZoom={true} style={{height: "100vh"}}>

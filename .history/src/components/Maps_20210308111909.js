@@ -30,6 +30,7 @@ const Maps=()=>{
             {markers && markers.map(marker=><Marker id={marker[0]} position={[marker[6],marker[5]]} icon={<img src={plane} alt="p" style={{width:'20px',transform: `rotate(${marker[10]}deg)`}}></img>}>
                 <Popup>
                     A pretty CSS3 popup. <br /> Easily customizable.
+                    {console.log(marker[10])}
                 </Popup>
             </Marker>)
             }

@@ -5,8 +5,9 @@ import Marker from 'react-leaflet-enhanced-marker'
 import plane from '../plane.svg'
 const MapChildren=({setBounds})=>{
     const map = useMapEvent('moveend',()=>{
+        setInterval(setBounds({lamin: map.getBounds()._southWest.lat, lomin: map.getBounds()._southWest.lng, lamax: map.getBounds()._northEast.lat, lomax: map.getBounds()._northEast.lng})
+        ,10000)
         console.log(map.getBounds({lamin: map.getBounds()._southWest.lat, lomin: map.getBounds()._southWest.lng, lamax: map.getBounds()._northEast.lat, lomax: map.getBounds()._northEast.lng}))
-        setBounds({lamin: map.getBounds()._southWest.lat, lomin: map.getBounds()._southWest.lng, lamax: map.getBounds()._northEast.lat, lomax: map.getBounds()._northEast.lng})
     })
     return null
 }
