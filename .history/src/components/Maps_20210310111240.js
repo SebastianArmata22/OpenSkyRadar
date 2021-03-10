@@ -4,15 +4,18 @@ import { Popup } from 'react-leaflet'
 import Marker from 'react-leaflet-enhanced-marker'
 import plane from '../plane.svg'
 import MapChildren from './MapChildren'
-import getData from '../functions/getData'
 
+const getData=(bounds,setMarkers)=>{
+    fetch(`https://opensky-network.org/api/states/all?lamin=${bounds.lamin}&lomin=${bounds.lomin}&lamax=${bounds.lamax}&lomax=${bounds.lomax}`)
+    .then(response=>response.json())
+    .then(data=>setMarkers(data.states))
+}
 const Maps=()=>{
     const [bounds, setBounds]=useState({lamin: "51.948812696066994", lomin: "19.665860826414725", lamax:"52.71085027997479", lomax: "22.084266782954526"})
     const position = [52.211154, 21.018596]
     const [markers, setMarkers]=useState([])
     useEffect(()=>{
-        const interval=setInterval(()=>getData(bounds,setMarkers),5000)
-        return ()=>clearInterval(interval)
+        setInterval(()=>getData(bounds,setMarkers),5000)
 
     },[bounds])
     return(
@@ -23,7 +26,7 @@ const Maps=()=>{
             />
             {markers && markers.map(marker=><Marker id={marker[0]} position={[marker[6],marker[5]]} icon={<img src={plane} alt="p" style={{width:'20px',transform: `rotate(${marker[10]}deg)`}}></img>}>
                 <Popup>
-                    Geometric alitutude: {marker[13]} <br />
+                    A pretty CSS3 popup. <br /> Easily customizable.
                 </Popup>
             </Marker>)
             }
