@@ -14,7 +14,7 @@ Using the API refreshes the results every 10s.
 
 ## How to open a project
 ```
-$ cd ../Portfolio-main
+$ cd ../open-sky-radar
 $ npm install
 $ npm start
 ```
